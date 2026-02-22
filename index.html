@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+background:#E6D6FF;
+font-family:'Poppins',sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+overflow:hidden;
+}
+
+/* Card */
+.card{
+background:white;
+padding:50px;
+border-radius:25px;
+text-align:center;
+width:65%;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+position:relative;
+z-index:2;
+animation:fade 0.6s ease;
+}
+
+@keyframes fade{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+h1{
+font-family:'Great Vibes',cursive;
+font-size:48px;
+color:#6a4caf;
+}
+
+button{
+padding:12px 28px;
+margin:12px;
+border:none;
+border-radius:20px;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+position:relative;
+}
+
+button:hover{
+transform:scale(1.08);
+}
+
+.primary{
+background:#caa8ff;
+color:white;
+}
+
+.secondary{
+background:#b8e0ff;
+color:white;
+}
+
+/* Hide pages */
+.page{
+display:none;
+}
+
+.active{
+display:block;
+}
+
+/* textarea hidden result */
+#resultBox{
+margin-top:20px;
+font-size:14px;
+opacity:0.6;
+}
+
+/* sparkles */
+.sparkles{
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+pointer-events:none;
+}
+
+.sparkles span{
+position:absolute;
+width:8px;
+height:8px;
+background:white;
+border-radius:50%;
+opacity:0.8;
+animation:float 10s linear infinite;
+}
+
+.sparkles span:nth-child(1){ left:10%; animation-duration:12s;}
+.sparkles span:nth-child(2){ left:25%; animation-duration:9s;}
+.sparkles span:nth-child(3){ left:40%; animation-duration:11s;}
+.sparkles span:nth-child(4){ left:55%; animation-duration:8s;}
+.sparkles span:nth-child(5){ left:70%; animation-duration:13s;}
+.sparkles span:nth-child(6){ left:85%; animation-duration:10s;}
+
+@keyframes float{
+0%{transform:translateY(100vh) scale(0);opacity:0;}
+20%{opacity:1;}
+100%{transform:translateY(-10vh) scale(1);opacity:0;}
+}
+
+.footer{
+margin-top:15px;
+opacity:0.6;
+font-size:14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Sparkles -->
+<div class="sparkles">
+<span></span><span></span><span></span>
+<span></span><span></span><span></span>
+</div>
+
+<!-- PAGE 1 -->
+<div id="home" class="card page active">
+
+<h1>Welcome ✨</h1>
+
+<button class="primary" onclick="showPage('question')">
+ready for the website
+</button>
+
+<button class="secondary" onclick="leaveSite()">
+leave the site
+</button>
+
+<div class="footer">shahana🎀</div>
+
+</div>
+
+
+<!-- PAGE 2 -->
+<div id="question" class="card page">
+
+<h1>do you really love me?</h1>
+
+<button class="primary" onclick="clickedYes()">yes</button>
+
+<button id="noBtn" class="secondary" onmouseover="moveButton()" onclick="clickedNo()">
+no
+</button>
+
+<div id="resultBox"></div>
+
+<div class="footer">shahana🎀</div>
+
+</div>
+
+
+<!-- PAGE 3 -->
+<div id="yesPage" class="card page">
+
+<h1>yay! i won 💜</h1>
+
+<div class="footer">shahana🎀</div>
+
+</div>
+
+
+
+<script>
+
+function showPage(pageId){
+document.querySelectorAll(".page").forEach(p=>{
+p.classList.remove("active");
+});
+document.getElementById(pageId).classList.add("active");
+}
+
+/* Leave site */
+function leaveSite(){
+window.location.href="about:blank";
+}
+
+/* YES click */
+function clickedYes(){
+localStorage.setItem("answer","YES");
+showPage("yesPage");
+}
+
+/* NO runaway */
+function moveButton(){
+let btn = document.getElementById("noBtn");
+
+let x = Math.random() * 300 - 150;
+let y = Math.random() * 200 - 100;
+
+btn.style.transform = `translate(${x}px, ${y}px)`;
+
+/* track attempt */
+localStorage.setItem("answer","TRIED_NO");
+document.getElementById("resultBox").innerText =
+"(debug) he tried clicking NO 😈";
+}
+
+/* If someone somehow clicks NO */
+function clickedNo(){
+localStorage.setItem("answer","NO");
+}
+
+</script>
+
+</body>
+</html>
